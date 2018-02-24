@@ -1,0 +1,40 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ds: <https://data.brla.gov/resource/_6fyg-p3r9/> .
+@prefix dsbase: <https://data.brla.gov/resource/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geo1: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix ods: <http://open-data-standards.github.com/2012/01/open-data-standards#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix socrata: <http://www.socrata.com/rdf/terms#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.brla.gov/resource/_6fyg-p3r9/230056> a dsbase:_6fyg-p3r9 ;
+    socrata:rowID "230056" ;
+    rdfs:member dsbase:_6fyg-p3r9 ;
+    ds:address_no_complete "21570" ;
+    ds:city "ZACHARY" ;
+    ds:council_person "Trae Welch" ;
+    ds:district_num "1" ;
+    ds:full_address "21570 PORT HICKEY RD" ;
+    ds:lot_location "PARISH" ;
+    ds:st_name "PORT HICKEY" ;
+    ds:st_suffix_type "RD" ;
+    ds:zip "70791" .
+
+<https://data.brla.gov/resource/_6fyg-p3r9/230061> a dsbase:_6fyg-p3r9 ;
+    socrata:rowID "230061" ;
+    rdfs:member dsbase:_6fyg-p3r9 ;
+    ds:address_no_complete "20851" ;
+    ds:city "CLINTON" ;
+    ds:council_person "Trae Welch" ;
+    ds:district_num "1" ;
+    ds:full_address "20851 PRIDE-BAYWOOD RD" ;
+    ds:lot_location "PARISH" ;
+    ds:st_name "PRIDE-BAYWOOD" ;
+    ds:st_suffix_type "RD" ;
+    ds:zip "70722" .
