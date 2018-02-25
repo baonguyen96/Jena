@@ -1,8 +1,16 @@
 package rdfGenerator;
 
-import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
+import triple.Triple;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SuppressWarnings("Duplicates")
@@ -12,7 +20,7 @@ public class RdfGenerator {
      * method: readRDF
      *
      * test reading the RDF file
-     * read each line and print out each tuple
+     * read each line and print out each triple
      */
     public static void readRDF() {
         Model model = ModelFactory.createDefaultModel();
@@ -23,8 +31,9 @@ public class RdfGenerator {
         Property predicate;
         Resource subject;
         RDFNode object;
+        int statementCount = 0;
 
-        // read all tuple from the ttl file
+        // read all triple from the ttl file
         while(stmtIterator.hasNext()) {
             statement = stmtIterator.next();
 
@@ -36,67 +45,53 @@ public class RdfGenerator {
             System.out.printf("Predicate: %s\n", predicate.getLocalName());
             System.out.printf("Object:    %s\n", object.toString());
             System.out.println();
+            statementCount++;
         }
+
+        System.out.println("Total statements: " + statementCount);
     }
 
 
     /***
      * method: updateRDF
      *
-     * update a given tuple with match ID in the RDF graph
-     *
-     * @param subjectID: select specific subject
-     * @param predicateName: which field to update
-     * @param newObject: new value of the predicate
+     * update a given triple with match ID in the RDF graph
      */
-    public static void updateRDF(String subjectID, String predicateName, String newObject) {
-
+    public static void updateRDF() {
         Model model = ModelFactory.createDefaultModel();
         model.read("sample-rdf/AddressesShort.ttl");
 
-        StmtIterator stmtIterator = model.listStatements();
-        Statement statement;
-        Property predicate;
-        Resource subject;
-        RDFNode object;
+        Triple triple1 = new Triple("230061", "council_person", "Some Name");
+        Triple triple2 = new Triple("230056", "zip", "ABCSH");
+        List<Triple> triples = new ArrayList<Triple>();
+        triples.add(triple1);
+        triples.add(triple2);
 
-        // read all tuple from the ttl file
-        while(stmtIterator.hasNext()) {
-            statement = stmtIterator.next();
+        model = RDFUpdator.update(model, new ArrayList<Triple>(triples));
 
-            subject = statement.getSubject();
-            predicate = statement.getPredicate();
-            object = statement.getObject();
+        // save rdf file
+        try {
+            File outputFile = new File("src/main/resources/sample-rdf/AddressesShortModified.ttl");
 
-            /*
-             * if found the matched subject:
-             *      and found the predicate:
-             *          then update
-             * else:
-             *      then continue
-             */
-            if(subject.getURI().endsWith(subjectID)) {
-                if(predicate.getLocalName().equalsIgnoreCase(predicateName)) {
+            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
 
-                    // build new statement
-
-
-                    // delete the current statement and add new statement
-                    model.remove(statement);
-
-                }
+            if(!outputFile.exists()) {
+                outputFile.createNewFile();
             }
 
-//            System.out.printf("Subject:   %s\n", subject.getURI());
-//            System.out.printf("Predicate: %s\n", predicate.getLocalName());
-//            System.out.printf("Object:    %s\n", object.toString());
-//            System.out.println();
+            RDFDataMgr.write(fileOutputStream, model, RDFFormat.TURTLE);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
 
     public static void main(String[] args) {
-        RdfGenerator.readRDF();
+        RdfGenerator.updateRDF();
     }
 
 }

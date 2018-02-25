@@ -26,15 +26,15 @@
     ds:st_suffix_type "RD" ;
     ds:zip "70791" .
 
-<https://data.brla.gov/resource/_6fyg-p3r9/230061> a dsbase:_6fyg-p3r9 ;
-    socrata:rowID "230061" ;
+<https://data.brla.gov/resource/_6fyg-p3r9/230088> a dsbase:_6fyg-p3r9 ;
+    socrata:rowID "230088" ;
     rdfs:member dsbase:_6fyg-p3r9 ;
-    ds:address_no_complete "20851" ;
-    ds:city "CLINTON" ;
-    ds:council_person "Trae Welch" ;
-    ds:district_num "1" ;
-    ds:full_address "20851 PRIDE-BAYWOOD RD" ;
-    ds:lot_location "PARISH" ;
-    ds:st_name "PRIDE-BAYWOOD" ;
-    ds:st_suffix_type "RD" ;
-    ds:zip "70722" .
+    ds:address_no_complete "11542" ;
+    ds:city "BATON ROUGE" ;
+    ds:council_person "Donna Collins-Lewis" ;
+    ds:district_num "6" ;
+    ds:full_address "11542 PAMELA DR" ;
+    ds:lot_location "BATON ROUGE" ;
+    ds:st_name "PAMELA" ;
+    ds:st_suffix_type "DR" ;
+    ds:zip "70815" .

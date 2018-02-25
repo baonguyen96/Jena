@@ -1,0 +1,40 @@
+@prefix dsbase: <https://data.brla.gov/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ds:    <https://data.brla.gov/resource/_6fyg-p3r9/> .
+@prefix geo1:  <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geo:   <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix socrata: <http://www.socrata.com/rdf/terms#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix ods:   <http://open-data-standards.github.com/2012/01/open-data-standards#> .
+
+ds:230056  a                    dsbase:_6fyg-p3r9 ;
+        rdfs:member             dsbase:_6fyg-p3r9 ;
+        socrata:rowID           "230056" ;
+        ds:address_no_complete  "21570" ;
+        ds:city                 "ZACHARY" ;
+        ds:council_person       "Trae Welch" ;
+        ds:district_num         "1" ;
+        ds:full_address         "21570 PORT HICKEY RD" ;
+        ds:lot_location         "PARISH" ;
+        ds:st_name              "PORT HICKEY" ;
+        ds:st_suffix_type       "RD" ;
+        ds:zip                  "ABCSH" .
+
+ds:230088  a                    dsbase:_6fyg-p3r9 ;
+        rdfs:member             dsbase:_6fyg-p3r9 ;
+        socrata:rowID           "230088" ;
+        ds:address_no_complete  "11542" ;
+        ds:city                 "BATON ROUGE" ;
+        ds:council_person       "Donna Collins-Lewis" ;
+        ds:district_num         "6" ;
+        ds:full_address         "11542 PAMELA DR" ;
+        ds:lot_location         "BATON ROUGE" ;
+        ds:st_name              "PAMELA" ;
+        ds:st_suffix_type       "DR" ;
+        ds:zip                  "70815" .
