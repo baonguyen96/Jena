@@ -38,3 +38,29 @@
     ds:st_name "PAMELA" ;
     ds:st_suffix_type "DR" ;
     ds:zip "70815" .
+
+<https://data.brla.gov/resource/_6fyg-p3r9/230112> a dsbase:_6fyg-p3r9 ;
+    socrata:rowID "230112" ;
+    rdfs:member dsbase:_6fyg-p3r9 ;
+    ds:address_no_complete "923" ;
+    ds:city "BATON ROUGE" ;
+    ds:council_person "Matt Watson" ;
+    ds:district_num "11" ;
+    ds:full_address "923 CROWN WAY" ;
+    ds:lot_location "BATON ROUGE" ;
+    ds:st_name "CROWN" ;
+    ds:st_suffix_type "WAY" ;
+    ds:zip "70806" .
+
+<https://data.brla.gov/resource/_6fyg-p3r9/230129> a dsbase:_6fyg-p3r9 ;
+    socrata:rowID "230129" ;
+    rdfs:member dsbase:_6fyg-p3r9 ;
+    ds:address_no_complete "7019" ;
+    ds:city "BATON ROUGE" ;
+    ds:council_person "Donna Collins-Lewis" ;
+    ds:district_num "6" ;
+    ds:full_address "7019 FLORIDA BLVD" ;
+    ds:lot_location "BATON ROUGE" ;
+    ds:st_name "FLORIDA" ;
+    ds:st_suffix_type "BLVD" ;
+    ds:zip "70806" .

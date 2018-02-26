@@ -6,9 +6,7 @@ import org.apache.jena.riot.RDFFormat;
 import triple.Triple;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +59,16 @@ public class RdfGenerator {
         Model model = ModelFactory.createDefaultModel();
         model.read("sample-rdf/AddressesShort.ttl");
 
-        Triple triple1 = new Triple("230061", "council_person", "Some Name");
-        Triple triple2 = new Triple("230056", "zip", "ABCSH");
+        // update single triple
+        Triple triple0 = new Triple("230056", "council_person", "Some Name");
+        model = RDFUpdator.update(model, triple0);
+
+        // update multiple triples at once
+        Triple triple1 = new Triple("230129", "district_num", "-1");
+        Triple triple2 = new Triple("230112", "city", "UNKNOWN");
         List<Triple> triples = new ArrayList<Triple>();
         triples.add(triple1);
         triples.add(triple2);
-
         model = RDFUpdator.update(model, new ArrayList<Triple>(triples));
 
         // save rdf file
@@ -81,10 +83,7 @@ public class RdfGenerator {
 
             RDFDataMgr.write(fileOutputStream, model, RDFFormat.TURTLE);
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

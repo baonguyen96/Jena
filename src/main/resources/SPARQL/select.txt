@@ -1,0 +1,29 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ds: <https://data.brla.gov/resource/_6fyg-p3r9/>
+PREFIX dsbase: <https://data.brla.gov/resource/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geo1: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX ods: <http://open-data-standards.github.com/2012/01/open-data-standards#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX socrata: <http://www.socrata.com/rdf/terms#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+# select top 100 council_person where his/her district number is less than 6
+select ?council_person ?district ?full_address
+where {
+  ?person ds:council_person ?council_person.
+  ?person ds:district_num ?district.
+  FILTER(xsd:integer(?district) < 6).
+  ?person ds:full_address ?full_address
+}
+#GROUP BY ?person ?council_person
+#ORDER BY ?council_person
+LIMIT 100

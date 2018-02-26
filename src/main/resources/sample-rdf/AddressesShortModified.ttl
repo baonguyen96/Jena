@@ -18,13 +18,26 @@ ds:230056  a                    dsbase:_6fyg-p3r9 ;
         socrata:rowID           "230056" ;
         ds:address_no_complete  "21570" ;
         ds:city                 "ZACHARY" ;
-        ds:council_person       "Trae Welch" ;
+        ds:council_person       "Some Name" ;
         ds:district_num         "1" ;
         ds:full_address         "21570 PORT HICKEY RD" ;
         ds:lot_location         "PARISH" ;
         ds:st_name              "PORT HICKEY" ;
         ds:st_suffix_type       "RD" ;
-        ds:zip                  "ABCSH" .
+        ds:zip                  "70791" .
+
+ds:230112  a                    dsbase:_6fyg-p3r9 ;
+        rdfs:member             dsbase:_6fyg-p3r9 ;
+        socrata:rowID           "230112" ;
+        ds:address_no_complete  "923" ;
+        ds:city                 "BATON ROUGE" ;
+        ds:council_person       "Matt Watson" ;
+        ds:district_num         "11" ;
+        ds:full_address         "923 CROWN WAY" ;
+        ds:lot_location         "BATON ROUGE" ;
+        ds:st_name              "CROWN" ;
+        ds:st_suffix_type       "WAY" ;
+        ds:zip                  "70806" .
 
 ds:230088  a                    dsbase:_6fyg-p3r9 ;
         rdfs:member             dsbase:_6fyg-p3r9 ;
@@ -38,3 +51,16 @@ ds:230088  a                    dsbase:_6fyg-p3r9 ;
         ds:st_name              "PAMELA" ;
         ds:st_suffix_type       "DR" ;
         ds:zip                  "70815" .
+
+ds:230129  a                    dsbase:_6fyg-p3r9 ;
+        rdfs:member             dsbase:_6fyg-p3r9 ;
+        socrata:rowID           "230129" ;
+        ds:address_no_complete  "7019" ;
+        ds:city                 "BATON ROUGE" ;
+        ds:council_person       "Donna Collins-Lewis" ;
+        ds:district_num         "6" ;
+        ds:full_address         "7019 FLORIDA BLVD" ;
+        ds:lot_location         "BATON ROUGE" ;
+        ds:st_name              "FLORIDA" ;
+        ds:st_suffix_type       "BLVD" ;
+        ds:zip                  "70806" .
