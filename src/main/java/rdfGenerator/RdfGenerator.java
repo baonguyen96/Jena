@@ -59,17 +59,24 @@ public class RdfGenerator {
         Model model = ModelFactory.createDefaultModel();
         model.read("sample-rdf/AddressesShort.ttl");
 
-        // update single triple
+        // update valid single triple
         Triple triple0 = new Triple("230056", "council_person", "Some Name");
-        model = RDFUpdator.update(model, triple0);
+        int totalTriplesChanged = RDFUpdator.update(model, triple0);
+        System.out.println("Total triples changed: " + totalTriplesChanged);
 
-        // update multiple triples at once
+        // update invalid single triple (wrong id)
+        triple0 = new Triple("230057", "council_person", "Some Name");
+        totalTriplesChanged = RDFUpdator.update(model, triple0);
+        System.out.println("Total triples changed: " + totalTriplesChanged);
+
+        // update valid multiple triples at once
         Triple triple1 = new Triple("230129", "district_num", "-1");
         Triple triple2 = new Triple("230112", "city", "UNKNOWN");
         List<Triple> triples = new ArrayList<Triple>();
         triples.add(triple1);
         triples.add(triple2);
-        model = RDFUpdator.update(model, new ArrayList<Triple>(triples));
+        totalTriplesChanged = RDFUpdator.update(model, new ArrayList<>(triples));
+        System.out.println("Total triples changed: " + totalTriplesChanged);
 
         // save rdf file
         try {

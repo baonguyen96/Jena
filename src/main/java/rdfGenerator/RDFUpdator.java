@@ -8,19 +8,20 @@ import java.util.List;
 
 
 public class RDFUpdator {
+
     /***
      * method: update
      *
      * update a single triple in the RDF model
      *
-     * @param originalModel: the RDF model
+     * @param model: the RDF model
      * @param triple: subject-predicate-object
-     * @return an updated model
+     * @return number of triples affected
      */
-    public static Model update(Model originalModel, Triple triple) {
+    public static int update(Model model, Triple triple) {
         List<Triple> triples = new ArrayList<>();
         triples.add(triple);
-        return update(originalModel, triples);
+        return update(model, triples);
     }
 
 
@@ -28,19 +29,20 @@ public class RDFUpdator {
      * method: update
      *
      * update multiple triples in the RDF model
+     * performing in-place update,
+     * i.e. change on the original model, not the copy
      *
-     * @param originalModel: the RDF model
+     * @param model: the RDF model
      * @param triples: list of 1 or more triples
-     * @return an updated model
+     * @return number of triples affected
      */
-    public static Model update(Model originalModel, List<Triple> triples) {
-        Model model = ModelFactory.createDefaultModel().add(originalModel);
+    public static int update(Model model, List<Triple> triples) {
         List<Statement> statementsToRemove = new ArrayList<Statement>();
-        List<Triple> copyOfTriples = new ArrayList<>(triples);
         StmtIterator stmtIterator = model.listStatements();
         Statement statement;
         Property predicate;
         Resource subject;
+        int affectedTriplesCount = 0;
 
         // read all triple from the ttl file
         while(stmtIterator.hasNext()) {
@@ -53,7 +55,7 @@ public class RDFUpdator {
              *      and found the predicate:
              *          then add to the list to be removed
              */
-            for(Triple triple: copyOfTriples) {
+            for(Triple triple: triples) {
                 if(subject.getURI().endsWith(triple.getSubject())) {
                     if(predicate.getLocalName().equalsIgnoreCase(triple.getPredicate())) {
                         statementsToRemove.add(statement);
@@ -76,19 +78,27 @@ public class RDFUpdator {
             // object
             String newObjectValue = "Default";
             for(int i = 0; i < triples.size(); i++) {
-                if(updatedSubject.getURI().endsWith(triples.get(i).getSubject()) &&
-                        triples.get(i).getPredicate().equals(updatedPredicate.getLocalName())) {
-                    newObjectValue = triples.remove(i).getObject();
-                }
+                Triple currentTriple = triples.get(i);
 
+                if(updatedSubject.getURI().endsWith(currentTriple.getSubject()) &&
+                        updatedPredicate.getLocalName().equals(currentTriple.getPredicate())) {
+                    newObjectValue = currentTriple.getObject();
+
+                    // remove if not empty (empty <-> affect every subject)
+                    if(!currentTriple.getSubject().isEmpty()) {
+                        triples.remove(i);
+                    }
+                    break;
+                }
             }
             updatedSubject.addProperty(updatedPredicate, newObjectValue);
 
             // delete the current statement and add new statement
             model.remove(removingStatement);
+            affectedTriplesCount++;
         }
 
-        return model;
+        return affectedTriplesCount;
     }
 
 

@@ -1,4 +1,5 @@
 import org.apache.jena.rdf.model.*;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rdfGenerator.RDFUpdator;
@@ -14,19 +15,27 @@ import static org.junit.Assert.assertNotEquals;
 
 public class RDFUpdatorTest {
     private static Model originalModel;
+    private Model modifiedModel;
+
 
     @BeforeClass
-    public static void setupModel() {
+    public static void setupOriginalModel() {
         System.out.println("Setup Original Model");
         originalModel = ModelFactory.createDefaultModel();
         originalModel.read("sample-rdf/AddressesShort.ttl");
     }
 
 
+    @Before
+    public void resetModifiedModel() {
+        modifiedModel = ModelFactory.createDefaultModel().add(originalModel);
+    }
+
+
     @Test
     public void testRdfUpdatorSingleTupleSuccess() {
         Triple triple = new Triple("230056", "council_person", "Some Name");
-        Model modifiedModel = RDFUpdator.update(originalModel, triple);
+        int affectedStatementCount = RDFUpdator.update(modifiedModel, triple);
 
         StmtIterator stmtIterator = modifiedModel.listStatements();
         Statement statement;
@@ -48,6 +57,7 @@ public class RDFUpdatorTest {
         }
 
         assertTrue(found);
+        assertEquals(1, affectedStatementCount);
 
     }
 
@@ -56,25 +66,36 @@ public class RDFUpdatorTest {
     public void testRdfUpdatorInvalidUpdateEmpty() {
         // test empty subject
         Triple triple = new Triple("", "city", "Some City");
-        Model modifiedModel = RDFUpdator.update(originalModel, triple);
+        int affectedStatementsCount = RDFUpdator.update(modifiedModel, triple);
+        int totalStatementsCount = 0;
 
         StmtIterator stmtIterator = modifiedModel.listStatements();
         Statement statement;
 
         while(stmtIterator.hasNext()) {
             statement = stmtIterator.next();
-            assertNotEquals("", statement.getSubject().getURI());
+            assertNotEquals(triple.getSubject(), statement.getSubject().getURI());
+            if(statement.getPredicate().getLocalName().equals(triple.getPredicate())) {
+                assertEquals(triple.getObject(), statement.getObject().toString());
+                totalStatementsCount++;
+            }
         }
+
+        assertEquals(affectedStatementsCount, totalStatementsCount);
 
         // test empty predicate
         triple = new Triple("230056", "", "Some Name");
-        modifiedModel = RDFUpdator.update(originalModel, triple);
+        affectedStatementsCount = RDFUpdator.update(modifiedModel, triple);
         stmtIterator = modifiedModel.listStatements();
 
         while(stmtIterator.hasNext()) {
             statement = stmtIterator.next();
-            assertNotEquals("", statement.getPredicate().getLocalName());
+            assertNotEquals(triple.getSubject(), statement.getSubject().getURI());
+            assertNotEquals(triple.getPredicate(), statement.getPredicate().getLocalName());
+            assertNotEquals(triple.getObject(), statement.getObject().toString());
         }
+
+        assertEquals(0, affectedStatementsCount);
     }
 
 
@@ -89,7 +110,7 @@ public class RDFUpdatorTest {
         newTriples.add(triple1);
         newTriples.add(triple2);
 
-        Model modifiedModel = RDFUpdator.update(originalModel, triples);
+        int affectedStatementsCount = RDFUpdator.update(modifiedModel, triples);
         StmtIterator stmtIterator = modifiedModel.listStatements();
         Statement statement;
         Property predicate;
@@ -114,6 +135,7 @@ public class RDFUpdatorTest {
 
         // make sure can get back enough triple
         assertEquals(newTriples.size(), totalFound);
+        assertEquals(newTriples.size(), affectedStatementsCount);
 
     }
 
