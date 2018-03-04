@@ -50,19 +50,28 @@ public class RDFUpdator {
             subject = statement.getSubject();
             predicate = statement.getPredicate();
 
+            System.out.println(statement);
+
             /*
              * if found the matched subject:
              *      and found the predicate:
              *          then add to the list to be removed
              */
             for(Triple triple: triples) {
+                System.out.println("Statement.subject   = " + subject.getURI());
+                System.out.println("Statement.predicate = " + predicate.getLocalName());
+                System.out.println("Triple.subject      = " + triple.getSubject());
+                System.out.println("Triple.predicate    = " + triple.getPredicate());
+
                 if(subject.getURI().endsWith(triple.getSubject())) {
-                    if(predicate.getLocalName().equalsIgnoreCase(triple.getPredicate())) {
+                    if(predicate.getLocalName().endsWith(triple.getPredicate().substring(1))) {
                         statementsToRemove.add(statement);
                     }
                 }
             }
         }
+
+        System.out.println("#statementsToRemove = " + statementsToRemove.size());
 
         // replace old statements with new ones
         for(Statement removingStatement : statementsToRemove) {
@@ -81,7 +90,7 @@ public class RDFUpdator {
                 Triple currentTriple = triples.get(i);
 
                 if(updatedSubject.getURI().endsWith(currentTriple.getSubject()) &&
-                        updatedPredicate.getLocalName().equals(currentTriple.getPredicate())) {
+                        updatedPredicate.getLocalName().endsWith(currentTriple.getPredicate().substring(1))) {
                     newObjectValue = currentTriple.getObject();
 
                     // remove if not empty (empty <-> affect every subject)
@@ -100,25 +109,5 @@ public class RDFUpdator {
 
         return affectedTriplesCount;
     }
-
-
-    /***
-     * method: update
-     *
-     * update a range of predicates of a given subject
-     *
-     * @param originalModel: original model
-     * @param subject: subjectID (row ID)
-     * @param predicates: list of predicates to change
-     * @return updated model
-     */
-    public static Model update(Model originalModel, String subject, List<String> predicates) {
-        Model model = ModelFactory.createDefaultModel().add(originalModel);
-
-
-
-        return model;
-    }
-
 
 }

@@ -8,11 +8,17 @@ import triple.Triple;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 @SuppressWarnings("Duplicates")
-public class RdfGenerator {
+public class Main {
+
+    public static void main(String[] args) {
+        Main.generateRDF();
+    }
+
 
     /**
      * method: readRDF
@@ -78,10 +84,32 @@ public class RdfGenerator {
         totalTriplesChanged = RDFUpdator.update(model, new ArrayList<>(triples));
         System.out.println("Total triples changed: " + totalTriplesChanged);
 
-        // save rdf file
-        try {
-            File outputFile = new File("src/main/resources/sample-rdf/AddressesShortModified.ttl");
+//        saveRDFGraphToFile(model);
+    }
 
+
+    public static void generateRDF() {
+        Model model = RDFGenerator.createDefaultModel();
+        Triple triple = new Triple("Address1", "zip",  "75090");
+        model = RDFGenerator.addTripleToModel(model, triple);
+        List<Triple> triples = new LinkedList<>();
+        triples.add(new Triple("Address1", "city", "Richardson"));
+        triples.add(new Triple("Address1", "state", "TX"));
+        triples.add(new Triple("Address2", "zip",  "XHSBS"));
+        triples.add(new Triple("Address2", "city", "Random"));
+        triples.add(new Triple("Address2", "state", "UNKNOWN"));
+        model = RDFGenerator.addMultipleTriplesToModel(model, triples);
+        saveRDFGraphToFile(model, "GeneratedRDF1.ttl");
+        int totalTriplesUpdated = RDFUpdator.update(model, new Triple("Address1", "zip", "12345"));
+        System.out.println(totalTriplesUpdated);
+        saveRDFGraphToFile(model, "GeneratedRDF1Modified.ttl");
+
+    }
+
+
+    public static void saveRDFGraphToFile(Model model, String fileName) {
+        try {
+            File outputFile = new File("src/main/resources/sample-rdf/" + fileName);
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
 
             if(!outputFile.exists()) {
@@ -93,11 +121,6 @@ public class RdfGenerator {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static void main(String[] args) {
-        RdfGenerator.updateRDF();
     }
 
 }

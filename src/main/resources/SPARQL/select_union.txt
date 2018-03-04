@@ -16,28 +16,24 @@ PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 
-# select top 100 council_person where his/her district number is less than 6
-select ?council_person ?district ?full_address
+select distinct ?council_person ?full_address ?city ?district ?zip
 where {
-  ?person ds:council_person ?council_person.
-  ?person ds:district_num ?district.
-  FILTER(xsd:integer(?district) < 6).
-  ?person ds:full_address ?full_address
+  {
+    ?person ds:council_person ?council_person.
+    FILTER(regex(?council_person, "Trae Welch")).
+    ?person ds:district_num ?district.
+    ?person ds:full_address ?full_address.
+    ?person ds:city ?city.
+    ?person ds:zip ?zip
+  }
+  union
+  {
+    ?person ds:council_person ?council_person.
+    FILTER(regex(?council_person, "Matt Watson")).
+    ?person ds:district_num ?district.
+    ?person ds:full_address ?full_address.
+    ?person ds:city ?city.
+    ?person ds:zip ?zip
+  }
 }
-#GROUP BY ?person ?council_person
-#ORDER BY ?council_person
-LIMIT 100
-
-
-# select all info of person "Trae Welch"
-select ?council_person ?full_address ?district
-where {
-  ?person ds:council_person ?council_person.
-  FILTER(regex(?council_person, "Trae Welch")).
-  ?person ds:district_num ?district.
-  ?person ds:full_address ?full_address
-}
-
-#GROUP BY ?person ?council_person
-#ORDER BY ?council_person
-LIMIT 100
+order by ?city ?zip
