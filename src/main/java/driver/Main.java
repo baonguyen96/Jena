@@ -1,8 +1,11 @@
-package rdfGenerator;
+package driver;
 
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import rdfGenerator.RDFGenerator;
+import rdfGenerator.RDFUpdator;
 import triple.Triple;
 
 import java.io.File;
@@ -16,8 +19,57 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Main.generateRDF();
+        Main.executeQuery();
+//        Main.generateRDF();
     }
+
+
+    public static void executeQuery() {
+        String queryIntegrity =
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n" +
+                "PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
+                "PREFIX ds: <https://data.brla.gov/resource/_6fyg-p3r9/>\n" +
+                "PREFIX dsbase: <https://data.brla.gov/resource/>\n" +
+                "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n" +
+                "PREFIX geo1: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
+                "PREFIX ods: <http://open-data-standards.github.com/2012/01/open-data-standards#>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "PREFIX socrata: <http://www.socrata.com/rdf/terms#>\n" +
+                "PREFIX xml: <http://www.w3.org/XML/1998/namespace>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "\n" +
+                "\n" +
+                "select distinct ?council_person ?full_address ?city ?zip ?something\n" +
+                "where {\n" +
+                "  {\n" +
+                "    ?person ds:council_person ?council_person.\n" +
+                "    ?person ds:full_address ?full_address.\n" +
+                "    ?person ds:city ?city.\n" +
+                "    ?person ds:something ?something.\n" +
+                "    ?person ds:zip ?zip\n" +
+                "  }  \n" +
+                "}\n" +
+                "limit 80\n";
+        Model model = ModelFactory.createDefaultModel();
+        model.read("sample-rdf/AddressesShortNoSubject.ttl");
+        Query query = QueryFactory.create(queryIntegrity);
+        QueryExecution qExe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qExe.execSelect();
+        ResultSetFormatter.out(System.out, results, query) ;
+
+//        while(results.hasNext()) {
+//            QuerySolution solution = results.next();
+//            RDFNode councilPerson = solution.get("council_person");
+//            RDFNode fullAddress = solution.get("full_address");
+//            System.out.println(councilPerson.toString() + " " + fullAddress.toString());
+//        }
+    }
+
 
 
     /**

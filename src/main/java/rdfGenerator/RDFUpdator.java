@@ -3,111 +3,80 @@ package rdfGenerator;
 import org.apache.jena.rdf.model.*;
 import triple.Triple;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class RDFUpdator {
 
-    /***
-     * method: update
-     *
-     * update a single triple in the RDF model
-     *
-     * @param model: the RDF model
-     * @param triple: subject-predicate-object
-     * @return number of triples affected
-     */
     public static int update(Model model, Triple triple) {
-        List<Triple> triples = new ArrayList<>();
+        List<Triple> triples = new LinkedList<>();
         triples.add(triple);
         return update(model, triples);
     }
 
 
-    /***
-     * method: update
-     *
-     * update multiple triples in the RDF model
-     * performing in-place update,
-     * i.e. change on the original model, not the copy
-     *
-     * @param model: the RDF model
-     * @param triples: list of 1 or more triples
-     * @return number of triples affected
-     */
     public static int update(Model model, List<Triple> triples) {
-        List<Statement> statementsToRemove = new ArrayList<Statement>();
-        StmtIterator stmtIterator = model.listStatements();
-        Statement statement;
-        Property predicate;
-        Resource subject;
+        List<Statement> statementsToRemove = getAllStatementsToRemove(model, triples);
         int affectedTriplesCount = 0;
+        Resource subject = null;
+        Property predicate = null;
+        Resource object = null;
 
-        // read all triple from the ttl file
-        while(stmtIterator.hasNext()) {
-            statement = stmtIterator.next();
-            subject = statement.getSubject();
-            predicate = statement.getPredicate();
-
-            System.out.println(statement);
-
-            /*
-             * if found the matched subject:
-             *      and found the predicate:
-             *          then add to the list to be removed
-             */
-            for(Triple triple: triples) {
-                System.out.println("Statement.subject   = " + subject.getURI());
-                System.out.println("Statement.predicate = " + predicate.getLocalName());
-                System.out.println("Triple.subject      = " + triple.getSubject());
-                System.out.println("Triple.predicate    = " + triple.getPredicate());
-
-                if(subject.getURI().endsWith(triple.getSubject())) {
-                    if(predicate.getLocalName().endsWith(triple.getPredicate().substring(1))) {
-                        statementsToRemove.add(statement);
-                    }
-                }
-            }
-        }
-
-        System.out.println("#statementsToRemove = " + statementsToRemove.size());
-
-        // replace old statements with new ones
         for(Statement removingStatement : statementsToRemove) {
-            // build new statement
+            subject = model.createResource(removingStatement.getSubject().getURI());
+            predicate = removingStatement.getPredicate();
 
-            // subject
-            subject = removingStatement.getSubject();
-            Resource updatedSubject = model.createResource(subject.getURI());
-
-            // predicate
-            Property updatedPredicate = removingStatement.getPredicate();
-
-            // object
-            String newObjectValue = "Default";
             for(int i = 0; i < triples.size(); i++) {
                 Triple currentTriple = triples.get(i);
 
-                if(updatedSubject.getURI().endsWith(currentTriple.getSubject()) &&
-                        updatedPredicate.getLocalName().endsWith(currentTriple.getPredicate().substring(1))) {
-                    newObjectValue = currentTriple.getObject();
+                if(areStatementAndTripleMatched(removingStatement, currentTriple)) {
+                    object = model.createResource(currentTriple.getObject());
 
-                    // remove if not empty (empty <-> affect every subject)
                     if(!currentTriple.getSubject().isEmpty()) {
                         triples.remove(i);
                     }
                     break;
                 }
             }
-            updatedSubject.addProperty(updatedPredicate, newObjectValue);
 
-            // delete the current statement and add new statement
+            model.add(subject, predicate, object);
             model.remove(removingStatement);
             affectedTriplesCount++;
         }
 
         return affectedTriplesCount;
+    }
+
+
+    private static List<Statement> getAllStatementsToRemove(Model model, List<Triple> triples) {
+        List<Statement> statementsToRemove = new LinkedList<>();
+        StmtIterator stmtIterator = model.listStatements();
+        Statement statement = null;
+
+        while(stmtIterator.hasNext()) {
+            statement = stmtIterator.next();
+            for(Triple triple: triples) {
+                if(areStatementAndTripleMatched(statement, triple)) {
+                    statementsToRemove.add(statement);
+                }
+            }
+        }
+
+        return statementsToRemove;
+    }
+
+
+    private static boolean areStatementAndTripleMatched(Statement statement, Triple triple) {
+        String statementSubjectValue = statement.getSubject().getURI();
+        String statementPredicateValue = statement.getPredicate().getLocalName();
+        String tripleSubjectValue = triple.getSubject();
+        String triplePredicateValue = triple.getPredicate();
+
+        // Jena skips the first letter of the predicate name
+        return (statementSubjectValue.endsWith(tripleSubjectValue) &&
+                statementPredicateValue.endsWith(triplePredicateValue.substring(1)) &&
+                statementPredicateValue.length() >= triplePredicateValue.length() - 1);
     }
 
 }

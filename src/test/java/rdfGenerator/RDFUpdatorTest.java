@@ -1,16 +1,15 @@
+package rdfGenerator;
+
 import org.apache.jena.rdf.model.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import rdfGenerator.RDFUpdator;
 import triple.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RDFUpdatorTest {
