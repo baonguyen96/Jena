@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateTimeMutation {
+class DateTimeMutation {
 
     private static ArrayList<String> dateFormats = new ArrayList<>(
             Arrays.asList(
@@ -30,37 +30,30 @@ public class DateTimeMutation {
     );
 
 
-    public enum Options {
-        CreateTodayDate, CreatePastOrFutureDate, CreateAlwaysInvalidDates,
-        CreateDateInAllFormatsExcept, CreateDateInFormat, CreateLeapDates
-    }
 
-
-    public static String mutate(Options option, String... data) throws Exception {
+    public static String mutate(int option, String... data) {
         String mutatedDate = "";
 
-
-        switch (option) {
-            case CreateTodayDate:
-                mutatedDate = createTodayDate();
-                break;
-            case CreatePastOrFutureDate:
-                mutatedDate = createPastOrFutureDate(data[0], Integer.parseInt(data[1]));
-                break;
-            case CreateAlwaysInvalidDates:
-                mutatedDate = createAlwaysInvalidDates();
-                break;
-            case CreateDateInAllFormatsExcept:
-                mutatedDate = createDateInAllFormatsExcept(data[0]);
-                break;
-            case CreateDateInFormat:
-                mutatedDate = createDateInFormat(data[0]);
-                break;
-            case CreateLeapDates:
-                mutatedDate = createLeapDate();
-                break;
-            default:
-                break;
+        if(option == Mutation.CREATE_TODAY_DATE) {
+            mutatedDate = createTodayDate();
+        }
+        else if(option == Mutation.CREATE_PAST_OR_FUTURE_DATE) {
+            mutatedDate = createPastOrFutureDate(data[0], Integer.parseInt(data[1]));
+        }
+        else if(option == Mutation.CREATE_ALWAYS_INVALID_DATES) {
+            mutatedDate = createAlwaysInvalidDates();
+        }
+        else if(option == Mutation.CREATE_DATE_IN_ALL_FORMATS_EXCEPT) {
+            mutatedDate = createDateInAllFormatsExcept(data[0]);
+        }
+        else if(option == Mutation.CREATE_DATE_IN_FORMAT) {
+            mutatedDate = createDateInFormat(data[0]);
+        }
+        else if(option == Mutation.CREATE_LEAP_DATES) {
+            mutatedDate = createLeapDate();
+        }
+        else {
+            mutatedDate = "";
         }
 
         return mutatedDate;

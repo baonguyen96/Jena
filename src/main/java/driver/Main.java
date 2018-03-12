@@ -1,9 +1,8 @@
 package driver;
 
 import constraints.Constraint;
-import constraints.ConstraintFactory;
-import constraints.NumberMutation;
-import constraints.StringMutation;
+import constraints.ConstraintCollection;
+import constraints.Mutation;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -23,8 +22,9 @@ public class Main {
     public static void main(String[] args) {
         ResultSet defaultResultSet = executeQuery();
         ResultSet modifiedResultSet = executeQuery();
-        List<Triple> triples = createListOfTriples(defaultResultSet, "council_person", "full_address", "city", "zip");
-//        printTriples(triples);
+        ConstraintCollection constraintCollection = createConstraintCollection();
+        List<Triple> triples = createListOfTriples(defaultResultSet, constraintCollection,
+                "council_person", "full_address", "city", "zip");
         Model model = RDFGenerator.createDefaultModel();
         model = RDFGenerator.addMultipleTriplesToModel(model, triples);
         saveRDFGraphToFile(model, "GeneratedRDFModel2.ttl");
@@ -91,7 +91,10 @@ public class Main {
     }
 
 
-    public static List<Triple> createListOfTriples(ResultSet resultSet, String... predicateNames) {
+    public static List<Triple> createListOfTriples(
+            ResultSet resultSet,
+            ConstraintCollection constraintCollection,
+            String... predicateNames) {
         List<Triple> triples = new LinkedList<>();
         QuerySolution solution = null;
         String subjectName = "", predicateName = "", objectValue = "";
@@ -106,8 +109,11 @@ public class Main {
                 objectValue = solution.get(predicate).toString();
 
                 // how to decide which predicate needs to be changed into what?
+                
+
+                // want the same functionality as this
                 if(predicate.equalsIgnoreCase("zip")) {
-                    objectValue = StringMutation.truncate(objectValue, 3);
+                    objectValue = Mutation.mutate(Mutation.TRUNCATE_NUMBER_OF_CHARACTERS, objectValue, "3");
                 }
 
                 triples.add(new Triple(subjectName, predicateName, objectValue));
@@ -116,6 +122,19 @@ public class Main {
 
         return triples;
     }
+
+
+    private static ConstraintCollection createConstraintCollection() {
+        ConstraintCollection constraintCollection = new ConstraintCollection();
+        Constraint constraint = null;
+
+        constraint = new Constraint("zip", Mutation.CREATE_RANDOM_STRING, "6");
+        constraintCollection.addConstraintToCollection(constraint);
+
+        return constraintCollection;
+    }
+
+
 
 
     public static void saveRDFGraphToFile(Model model, String fileName) {
@@ -133,21 +152,6 @@ public class Main {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    private static List<Constraint> createListOfConstraints() {
-        List<Constraint> constraints = new LinkedList<>();
-
-        constraints.add(
-                ConstraintFactory.createStringConstraint(
-                        "zip",
-                        StringMutation.Options.AppendNumberOfCharacters,
-                        "7"
-                )
-        );
-
-        return constraints;
     }
 
 }

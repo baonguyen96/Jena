@@ -41,10 +41,10 @@ class DateTimeMutationTest {
     @Test
     void testCreateAlwaysInvalidDates() {
         Calendar cal = Calendar.getInstance();
-        Date invalidDate = new Date(DateTimeMutation.createAlwaysInvalidDates());
-        cal.setLenient(false);
 
         expectedException.expect(Exception.class);
+        Date invalidDate = new Date(DateTimeMutation.createAlwaysInvalidDates());
+        cal.setLenient(false);
         cal.setTime(invalidDate);
         cal.getTime();
     }

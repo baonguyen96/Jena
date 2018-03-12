@@ -4,63 +4,51 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 
-public class NumberMutation {
-
-    public enum Options {
-        NegativeInteger, PositiveInteger,
-        NegativeOutOfRangeInteger, PositiveOutOfRangeInteger,
-        NegativeFloatingPoint, PositiveFloatingPoint,
-        NegativeIntegerWithComma, PositiveIntegerWithComma,
-        NegativeFloatingPointWithComma, PositiveFloatingPointWithComma,
-        ScientificNotation, Zero, EuropeanStyle
-    }
-
-
-    public static String mutate(Options option, String... changeData) throws Exception {
+class NumberMutation {
+    public static String mutate(final int OPTION, String... changeData) {
         String number = "";
-        int index = 0;
 
-        switch (option) {
-            case NegativeInteger:
-                number = createNegativeInteger();
-                break;
-            case PositiveInteger:
-                number = createPositiveInteger();
-                break;
-            case NegativeOutOfRangeInteger:
-                number = createNegativeOutOfRangeInteger();
-                break;
-            case PositiveOutOfRangeInteger:
-                number = createPositiveOfOutRangeInteger();
-                break;
-            case NegativeFloatingPoint:
-                number = createNegativeFloatingPoint();
-                break;
-            case PositiveFloatingPoint:
-                number = createPositiveFloatingPoint();
-                break;
-            case NegativeIntegerWithComma:
-                number = createNegativeIntegerWithComma();
-                break;
-            case PositiveIntegerWithComma:
-                number = createPositiveIntegerWithComma();
-                break;
-            case NegativeFloatingPointWithComma:
-                number = createNegativeFloatingPointWithComma();
-                break;
-            case PositiveFloatingPointWithComma:
-                number = createPositiveFloatingPointWithComma();
-                break;
-            case ScientificNotation:
-                number = createScientificNotationNumber();
-                break;
-            case Zero:
-                number = createZero();
-                break;
-            case EuropeanStyle:
-                number = convertToEuropeanStyle(changeData[index++]);
-            default:
-                break;
+        if(OPTION == Mutation.CREATE_NEGATIVE_INTEGER) {
+            number = createNegativeInteger();
+        }
+        else if(OPTION == Mutation.CREATE_POSITIVE_INTEGER) {
+            number = createPositiveInteger();
+        }
+        else if(OPTION == Mutation.CREATE_NEGATIVE_OVERFLOW_INTEGER) {
+            number = createNegativeOverflowInteger();
+        }
+        else if(OPTION == Mutation.CREATE_POSITIVE_OVERFLOW_INTEGER) {
+            number = createPositiveOverflowInteger();
+        }
+        else if(OPTION == Mutation.CREATE_NEGATIVE_FLOATING_POINT) {
+            number = createNegativeFloatingPoint();
+        }
+        else if(OPTION == Mutation.CREATE_POSITIVE_FLOATING_POINT) {
+            number = createPositiveFloatingPoint();
+        }
+        else if(OPTION == Mutation.CREATE_NEGATIVE_INTEGER_WITH_COMMA) {
+            number = createNegativeIntegerWithComma();
+        }
+        else if(OPTION == Mutation.CREATE_POSITIVE_INTEGER_WITH_COMMA) {
+            number = createPositiveIntegerWithComma();
+        }
+        else if(OPTION == Mutation.CREATE_NEGATIVE_FLOATING_POINT_WITH_COMMA) {
+            number = createNegativeFloatingPointWithComma();
+        }
+        else if(OPTION == Mutation.CREATE_POSITIVE_FLOATING_POINT_WITH_COMMA) {
+            number = createPositiveFloatingPointWithComma();
+        }
+        else if(OPTION == Mutation.CREATE_SCIENTIFIC_NOTATION_NUMBER) {
+            number = createScientificNotationNumber();
+        }
+        else if(OPTION == Mutation.CREATE_ZERO) {
+            number = createZero();
+        }
+        else if(OPTION == Mutation.CONVERT_TO_EUROPEAN_STYLE) {
+            number = convertToEuropeanStyle(changeData[0]);
+        }
+        else {
+            number = "";
         }
 
         return number;
@@ -77,13 +65,13 @@ public class NumberMutation {
         return Integer.toString(number);
     }
 
-    public static String createNegativeOutOfRangeInteger() {
+    public static String createNegativeOverflowInteger() {
         String negativeInteger = createNegativeInteger();
         String positiveInteger = createPositiveInteger();
         return negativeInteger + positiveInteger + positiveInteger;
     }
 
-    public static String createPositiveOfOutRangeInteger() {
+    public static String createPositiveOverflowInteger() {
         String positiveInteger = createPositiveInteger();
         return positiveInteger + positiveInteger + positiveInteger;
     }

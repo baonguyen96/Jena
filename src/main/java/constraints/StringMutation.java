@@ -1,47 +1,39 @@
 package constraints;
 
-public class StringMutation {
+class StringMutation {
 
-    public enum Options {
-        ReplaceCharacter, AppendNumberOfCharacters, Truncate, Emptify,
-        MultipleSpaces, LeadingSpace, TrailingSpace, Random, InsertSpecialCharacters
-    }
-
-    public static String mutate(String originalString, Options option, String... changeData)
-            throws Exception {
+    public static String mutate(int option, String... data) {
         String mutatedString = "";
-        int changeDataIndex = 0;
 
-        switch (option) {
-            case ReplaceCharacter:
-                mutatedString = replaceCharacter(originalString, changeData[changeDataIndex++], changeData[changeDataIndex++]);
-                break;
-            case AppendNumberOfCharacters:
-                mutatedString = appendNumberOfCharacter(originalString, Integer.parseInt(changeData[changeDataIndex++]));
-                break;
-            case Truncate:
-                mutatedString = truncate(originalString, Integer.parseInt(changeData[changeDataIndex++]));
-                break;
-            case Emptify:
-                mutatedString = emptify();
-                break;
-            case MultipleSpaces:
-                mutatedString = changeToMultiSpaces(originalString);
-                break;
-            case LeadingSpace:
-                mutatedString = addLeadingSpace(originalString);
-                break;
-            case TrailingSpace:
-                mutatedString = addTrailingSpace(originalString);
-                break;
-            case Random:
-                mutatedString = randomize(Integer.parseInt(changeData[changeDataIndex++]));
-                break;
-            case InsertSpecialCharacters:
-                mutatedString = insertSpecialCharacters(changeData[changeDataIndex++]);
-                break;
-            default:
-                break;
+        if (option == Mutation.REPLACE_CHARACTER) {
+            mutatedString = replaceCharacter(data[0], data[1], data[2]);
+        }
+        else if (option == Mutation.APPEND_NUMBER_OF_CHARACTERS) {
+            mutatedString = appendNumberOfCharacters(data[0], Integer.parseInt(data[1]));
+        }
+        else if (option == Mutation.TRUNCATE_NUMBER_OF_CHARACTERS) {
+            mutatedString = truncateNumberOfCharacters(data[0], Integer.parseInt(data[1]));
+        }
+        else if (option == Mutation.EMPTIFY) {
+            mutatedString = emptify();
+        }
+        else if (option == Mutation.CONVERT_TO_MULTIPLE_SPACES) {
+            mutatedString = changeToMultiSpaces(data[0]);
+        }
+        else if (option == Mutation.ADD_LEADING_SPACE) {
+            mutatedString = addLeadingSpace(data[0]);
+        }
+        else if (option == Mutation.ADD_TRAILING_SPACE) {
+            mutatedString = addTrailingSpace(data[0]);
+        }
+        else if (option == Mutation.CREATE_RANDOM_STRING) {
+            mutatedString = createRandomString(Integer.parseInt(data[0]));
+        }
+        else if (option == Mutation.ADD_SPECIAL_CHARACTERS) {
+            mutatedString = addSpecialCharacters(data[0]);
+        }
+        else {
+            mutatedString = "";
         }
 
         return mutatedString;
@@ -52,12 +44,12 @@ public class StringMutation {
         return originalString.replaceAll(characterToBeReplaced, characterToReplace);
     }
 
-    public static String appendNumberOfCharacter(String originalString, int howManyCharactersToAppend) {
-        return originalString + randomize(howManyCharactersToAppend);
+    public static String appendNumberOfCharacters(String originalString, int howManyCharactersToAppend) {
+        return originalString + createRandomString(howManyCharactersToAppend);
     }
 
 
-    public static String truncate(String originalString, int howManyCharactersToTruncate) {
+    public static String truncateNumberOfCharacters(String originalString, int howManyCharactersToTruncate) {
         if(howManyCharactersToTruncate >= originalString.length()) {
             return emptify();
         }
@@ -94,12 +86,13 @@ public class StringMutation {
         return " " + originalString;
     }
 
+
     public static String addTrailingSpace(String originalString) {
         return originalString + " ";
     }
 
 
-    public static String randomize(int length) {
+    public static String createRandomString(int length) {
         int randomNumber = 0;
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -112,7 +105,7 @@ public class StringMutation {
     }
 
 
-    public static String insertSpecialCharacters(String originalString) {
+    public static String addSpecialCharacters(String originalString) {
         StringBuilder stringBuilder = new StringBuilder(originalString);
         String[] specialCharacters = {
                 "奥", "и", "모", "á", ":", "'", "?", "Ø", "\t", "\r\n"

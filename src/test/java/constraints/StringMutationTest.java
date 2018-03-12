@@ -20,25 +20,11 @@ class StringMutationTest {
     @Test
     void testMutationOptions() {
         originalString = "Hello";
-        StringMutation.Options[] options = {
-                StringMutation.Options.Emptify,
-                StringMutation.Options.AppendNumberOfCharacters
-        };
-        String[] changeData = {"2"};
+        mutatedString = StringMutation.mutate(Mutation.APPEND_NUMBER_OF_CHARACTERS, originalString, "2");
+        assertEquals(7, mutatedString.length());
 
-        mutatedString = StringMutation.mutate(originalString, options, changeData);
-        assertEquals(2, mutatedString.length());
-
-        options = new StringMutation.Options[]{
-                StringMutation.Options.ReplaceCharacter,
-                StringMutation.Options.LeadingSpace,
-                StringMutation.Options.MultipleSpaces,
-                StringMutation.Options.AppendNumberOfCharacters
-        };
-        changeData = new String[]{"l", "j", "2"};
-        mutatedString = StringMutation.mutate(originalString, options, changeData);
-        assertTrue(mutatedString.startsWith("   Hejjo"));
-        assertEquals(originalString.length() + 5, mutatedString.length());
+        mutatedString = StringMutation.mutate(Mutation.REPLACE_CHARACTER, originalString, "l", "j");
+        assertEquals("Hejjo", mutatedString);
     }
 
 
@@ -54,7 +40,7 @@ class StringMutationTest {
     void testAppendNumberOfCharacter() {
         int numberOfCharactersToAppend = 128;
         originalString = "Hi";
-        mutatedString = StringMutation.appendNumberOfCharacter(originalString, numberOfCharactersToAppend);
+        mutatedString = StringMutation.appendNumberOfCharacters(originalString, numberOfCharactersToAppend);
 
         assertEquals(originalString.length() + numberOfCharactersToAppend, mutatedString.length());
     }
@@ -63,13 +49,13 @@ class StringMutationTest {
     @Test
     void testTruncate() {
         originalString = "Hello";
-        mutatedString = StringMutation.truncate(originalString, 1);
+        mutatedString = StringMutation.truncateNumberOfCharacters(originalString, 1);
         assertEquals("Hell", mutatedString);
 
-        mutatedString = StringMutation.truncate(originalString, 5);
+        mutatedString = StringMutation.truncateNumberOfCharacters(originalString, 5);
         assertEquals("", mutatedString);
 
-        mutatedString = StringMutation.truncate(originalString, 6);
+        mutatedString = StringMutation.truncateNumberOfCharacters(originalString, 6);
         assertEquals("", mutatedString);
     }
 
@@ -125,7 +111,7 @@ class StringMutationTest {
     @Test
     void testInsertSpecialCharacters() {
         originalString = "Hello world";
-        mutatedString = StringMutation.insertSpecialCharacters(originalString);
+        mutatedString = StringMutation.addSpecialCharacters(originalString);
         assertNotEquals(originalString, mutatedString);
         assertTrue(originalString.length() < mutatedString.length());
         assertFalse(mutatedString.matches("\\A\\p{ASCII}*\\z"));
