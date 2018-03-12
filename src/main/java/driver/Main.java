@@ -1,5 +1,8 @@
 package driver;
 
+import constraints.Constraint;
+import constraints.ConstraintFactory;
+import constraints.NumberMutation;
 import constraints.StringMutation;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
@@ -102,6 +105,7 @@ public class Main {
                 predicateName = predicate;
                 objectValue = solution.get(predicate).toString();
 
+                // how to decide which predicate needs to be changed into what?
                 if(predicate.equalsIgnoreCase("zip")) {
                     objectValue = StringMutation.truncate(objectValue, 3);
                 }
@@ -129,6 +133,21 @@ public class Main {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private static List<Constraint> createListOfConstraints() {
+        List<Constraint> constraints = new LinkedList<>();
+
+        constraints.add(
+                ConstraintFactory.createStringConstraint(
+                        "zip",
+                        StringMutation.Options.AppendNumberOfCharacters,
+                        "7"
+                )
+        );
+
+        return constraints;
     }
 
 }

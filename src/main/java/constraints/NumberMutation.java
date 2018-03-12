@@ -16,46 +16,46 @@ public class NumberMutation {
     }
 
 
-    public static String mutate(Options option, String... changeData) {
+    public static String mutate(Options option, String... changeData) throws Exception {
         String number = "";
         int index = 0;
 
         switch (option) {
             case NegativeInteger:
-                number = getNegativeInteger();
+                number = createNegativeInteger();
                 break;
             case PositiveInteger:
-                number = getPositiveInteger();
+                number = createPositiveInteger();
                 break;
             case NegativeOutOfRangeInteger:
-                number = getNegativeOutOfRangeInteger();
+                number = createNegativeOutOfRangeInteger();
                 break;
             case PositiveOutOfRangeInteger:
-                number = getPositiveOfOutRangeInteger();
+                number = createPositiveOfOutRangeInteger();
                 break;
             case NegativeFloatingPoint:
-                number = getNegativeFloatingPoint();
+                number = createNegativeFloatingPoint();
                 break;
             case PositiveFloatingPoint:
-                number = getPositiveFloatingPoint();
+                number = createPositiveFloatingPoint();
                 break;
             case NegativeIntegerWithComma:
-                number = getNegativeIntegerWithComma();
+                number = createNegativeIntegerWithComma();
                 break;
             case PositiveIntegerWithComma:
-                number = getPositiveIntegerWithComma();
+                number = createPositiveIntegerWithComma();
                 break;
             case NegativeFloatingPointWithComma:
-                number = getNegativeFloatingPointWithComma();
+                number = createNegativeFloatingPointWithComma();
                 break;
             case PositiveFloatingPointWithComma:
-                number = getPositiveFloatingPointWithComma();
+                number = createPositiveFloatingPointWithComma();
                 break;
             case ScientificNotation:
-                number = getScientificNotationNumber();
+                number = createScientificNotationNumber();
                 break;
             case Zero:
-                number = getZero();
+                number = createZero();
                 break;
             case EuropeanStyle:
                 number = convertToEuropeanStyle(changeData[index++]);
@@ -67,61 +67,61 @@ public class NumberMutation {
     }
 
 
-    public static String getNegativeInteger() {
+    public static String createNegativeInteger() {
         int number = (int)(Math.random() * Integer.MAX_VALUE);
         return Integer.toString(-1 * number);
     }
 
-    public static String getPositiveInteger() {
+    public static String createPositiveInteger() {
         int number = (int)(Math.random() * Integer.MAX_VALUE);
         return Integer.toString(number);
     }
 
-    public static String getNegativeOutOfRangeInteger() {
-        String negativeInteger = getNegativeInteger();
-        String positiveInteger = getPositiveInteger();
+    public static String createNegativeOutOfRangeInteger() {
+        String negativeInteger = createNegativeInteger();
+        String positiveInteger = createPositiveInteger();
         return negativeInteger + positiveInteger + positiveInteger;
     }
 
-    public static String getPositiveOfOutRangeInteger() {
-        String positiveInteger = getPositiveInteger();
+    public static String createPositiveOfOutRangeInteger() {
+        String positiveInteger = createPositiveInteger();
         return positiveInteger + positiveInteger + positiveInteger;
     }
 
-    public static String getNegativeFloatingPoint() {
+    public static String createNegativeFloatingPoint() {
         return Double.toString(-1 * (Math.random() * Double.MAX_VALUE));
     }
 
-    public static String getPositiveFloatingPoint() {
+    public static String createPositiveFloatingPoint() {
         return Double.toString(Math.random() * Double.MAX_VALUE);
     }
 
-    public static String getNegativeIntegerWithComma() {
+    public static String createNegativeIntegerWithComma() {
         int number = (int)(Math.random() * Integer.MAX_VALUE);
         return NumberFormat.getNumberInstance(Locale.US).format(-1 * number);
     }
 
-    public static String getPositiveIntegerWithComma() {
+    public static String createPositiveIntegerWithComma() {
         int number = (int)(Math.random() * Integer.MAX_VALUE);
         return NumberFormat.getNumberInstance(Locale.US).format(number);
     }
 
-    public static String getNegativeFloatingPointWithComma() {
+    public static String createNegativeFloatingPointWithComma() {
         double number = (Math.random() * Integer.MAX_VALUE);
         return NumberFormat.getNumberInstance(Locale.ENGLISH).format(-1 * number);
     }
 
-    public static String getPositiveFloatingPointWithComma() {
+    public static String createPositiveFloatingPointWithComma() {
         double number = (Math.random() * Integer.MAX_VALUE);
         return NumberFormat.getNumberInstance(Locale.ENGLISH).format(number);
     }
 
-    public static String getScientificNotationNumber() {
+    public static String createScientificNotationNumber() {
         return Double.toString(Math.random() * Double.MAX_VALUE);
     }
 
 
-    public static String getZero() {
+    public static String createZero() {
         return "0";
     }
 

@@ -7,43 +7,41 @@ public class StringMutation {
         MultipleSpaces, LeadingSpace, TrailingSpace, Random, InsertSpecialCharacters
     }
 
-    public static String mutate(String originalString, Options[] options, String[] changeData) {
+    public static String mutate(String originalString, Options option, String... changeData)
+            throws Exception {
         String mutatedString = "";
         int changeDataIndex = 0;
 
-        for(Options option : options) {
-            switch (option) {
-                case ReplaceCharacter:
-                    mutatedString = replaceCharacter(originalString, changeData[changeDataIndex++], changeData[changeDataIndex++]);
-                    break;
-                case AppendNumberOfCharacters:
-                    mutatedString = appendNumberOfCharacter(originalString, Integer.parseInt(changeData[changeDataIndex++]));
-                    break;
-                case Truncate:
-                    mutatedString = truncate(originalString, Integer.parseInt(changeData[changeDataIndex++]));
-                    break;
-                case Emptify:
-                    mutatedString = emptify();
-                    break;
-                case MultipleSpaces:
-                    mutatedString = changeToMultiSpaces(originalString);
-                    break;
-                case LeadingSpace:
-                    mutatedString = addLeadingSpace(originalString);
-                    break;
-                case TrailingSpace:
-                    mutatedString = addTrailingSpace(originalString);
-                    break;
-                case Random:
-                    mutatedString = randomize(Integer.parseInt(changeData[changeDataIndex++]));
-                    break;
-                case InsertSpecialCharacters:
-                    mutatedString = insertSpecialCharacters(changeData[changeDataIndex++]);
-                    break;
-                default:
-                    break;
-            }
-            originalString = mutatedString;
+        switch (option) {
+            case ReplaceCharacter:
+                mutatedString = replaceCharacter(originalString, changeData[changeDataIndex++], changeData[changeDataIndex++]);
+                break;
+            case AppendNumberOfCharacters:
+                mutatedString = appendNumberOfCharacter(originalString, Integer.parseInt(changeData[changeDataIndex++]));
+                break;
+            case Truncate:
+                mutatedString = truncate(originalString, Integer.parseInt(changeData[changeDataIndex++]));
+                break;
+            case Emptify:
+                mutatedString = emptify();
+                break;
+            case MultipleSpaces:
+                mutatedString = changeToMultiSpaces(originalString);
+                break;
+            case LeadingSpace:
+                mutatedString = addLeadingSpace(originalString);
+                break;
+            case TrailingSpace:
+                mutatedString = addTrailingSpace(originalString);
+                break;
+            case Random:
+                mutatedString = randomize(Integer.parseInt(changeData[changeDataIndex++]));
+                break;
+            case InsertSpecialCharacters:
+                mutatedString = insertSpecialCharacters(changeData[changeDataIndex++]);
+                break;
+            default:
+                break;
         }
 
         return mutatedString;

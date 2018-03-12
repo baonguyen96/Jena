@@ -30,13 +30,13 @@ public class DateTimeMutation {
     );
 
 
-    enum Options {
+    public enum Options {
         CreateTodayDate, CreatePastOrFutureDate, CreateAlwaysInvalidDates,
         CreateDateInAllFormatsExcept, CreateDateInFormat, CreateLeapDates
     }
 
 
-    public static String mutate(Options option, String... data) {
+    public static String mutate(Options option, String... data) throws Exception {
         String mutatedDate = "";
 
 

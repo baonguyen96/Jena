@@ -45,7 +45,7 @@ class NumberMutationTest {
 
     @Test
     void testGetNegativeInteger() {
-        mutatedNumberAsString = NumberMutation.getNegativeInteger();
+        mutatedNumberAsString = NumberMutation.createNegativeInteger();
         assertTrue(mutatedNumberAsString.startsWith("-"));
         assertTrue(Integer.parseInt(mutatedNumberAsString) < 0);
     }
@@ -53,7 +53,7 @@ class NumberMutationTest {
 
     @Test
     void testGetPositiveInteger() {
-        mutatedNumberAsString = NumberMutation.getPositiveInteger();
+        mutatedNumberAsString = NumberMutation.createPositiveInteger();
         assertFalse(mutatedNumberAsString.startsWith("-"));
         assertTrue(Integer.parseInt(mutatedNumberAsString) >= 0);
     }
@@ -61,18 +61,18 @@ class NumberMutationTest {
 
     @Test
     void testOverflowPositiveInt() {
-        Assertions.assertThrows(NumberFormatException.class, () -> Integer.parseInt(NumberMutation.getPositiveOfOutRangeInteger()));
+        Assertions.assertThrows(NumberFormatException.class, () -> Integer.parseInt(NumberMutation.createPositiveOfOutRangeInteger()));
     }
 
     @Test
     void testOverflowNegativeInt() {
-        Assertions.assertThrows(NumberFormatException.class, () -> Integer.parseInt(NumberMutation.getNegativeOutOfRangeInteger()));
+        Assertions.assertThrows(NumberFormatException.class, () -> Integer.parseInt(NumberMutation.createNegativeOutOfRangeInteger()));
     }
 
 
     @Test
     void testGetNagativeFloatingPoint() {
-        mutatedNumberAsString = NumberMutation.getNegativeFloatingPoint();
+        mutatedNumberAsString = NumberMutation.createNegativeFloatingPoint();
         assertTrue(mutatedNumberAsString.startsWith("-"));
         assertTrue(Double.parseDouble(mutatedNumberAsString) < 0);
     }
@@ -80,7 +80,7 @@ class NumberMutationTest {
 
     @Test
     void testGetPositiveFloatingPoint() {
-        mutatedNumberAsString = NumberMutation.getPositiveFloatingPoint();
+        mutatedNumberAsString = NumberMutation.createPositiveFloatingPoint();
         assertFalse(mutatedNumberAsString.startsWith("-"));
         assertTrue(Double.parseDouble(mutatedNumberAsString) >= 0);
     }
@@ -88,7 +88,7 @@ class NumberMutationTest {
 
     @Test
     void testGetNegativeIntegerWithComma() {
-        mutatedNumberAsString = NumberMutation.getNegativeIntegerWithComma();
+        mutatedNumberAsString = NumberMutation.createNegativeIntegerWithComma();
         assertTrue(mutatedNumberAsString.startsWith("-"));
         int lengthOfMutatedNumberAsString = mutatedNumberAsString.length();
         int commaCount = 1;
@@ -107,7 +107,7 @@ class NumberMutationTest {
 
     @Test
     void testGetPositiveIntegerWithComma() {
-        mutatedNumberAsString = NumberMutation.getPositiveIntegerWithComma();
+        mutatedNumberAsString = NumberMutation.createPositiveIntegerWithComma();
         int lengthOfMutatedNumberAsString = mutatedNumberAsString.length();
         int commaCount = 1;
 
@@ -125,7 +125,7 @@ class NumberMutationTest {
 
     @Test
     void testGetNegativeFloatingPointWithComma() {
-        mutatedNumberAsString = NumberMutation.getNegativeFloatingPointWithComma();
+        mutatedNumberAsString = NumberMutation.createNegativeFloatingPointWithComma();
         assertTrue(mutatedNumberAsString.startsWith("-"));
         assertTrue(mutatedNumberAsString.contains("."));
         assertEquals(mutatedNumberAsString.length() - 1,
@@ -157,7 +157,7 @@ class NumberMutationTest {
 
     @Test
     void testGetPositiveFloatingPointWithComma() {
-        mutatedNumberAsString = NumberMutation.getPositiveFloatingPointWithComma();
+        mutatedNumberAsString = NumberMutation.createPositiveFloatingPointWithComma();
         assertFalse(mutatedNumberAsString.startsWith("-"));
         assertTrue(mutatedNumberAsString.contains("."));
         assertEquals(mutatedNumberAsString.length() - 1,
@@ -189,7 +189,7 @@ class NumberMutationTest {
 
     @Test
     void testGetScientificNotationNumber() {
-        mutatedNumberAsString = NumberMutation.getScientificNotationNumber();
+        mutatedNumberAsString = NumberMutation.createScientificNotationNumber();
         assertTrue(mutatedNumberAsString.contains("E"));
         assertEquals(mutatedNumberAsString.length() - 1,
                 mutatedNumberAsString.replaceAll("E", "").length());
@@ -204,7 +204,7 @@ class NumberMutationTest {
 
     @Test
     void testGetZero() {
-        assertEquals("0", NumberMutation.getZero());
+        assertEquals("0", NumberMutation.createZero());
     }
 
 
