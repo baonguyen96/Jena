@@ -1,1 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
+.idea/inspectionProfiles/
+target/classes/constraints/
+target/classes/driver/
+target/classes/sample-rdf/AddressesShortNoSubject.ttl
+target/generated-sources/
+target/generated-test-sources/
+target/test-classes/

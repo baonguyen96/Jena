@@ -74,9 +74,17 @@ public class RDFUpdator {
         String triplePredicateValue = triple.getPredicate();
 
         // Jena skips the first letter of the predicate name
-        return (statementSubjectValue.endsWith(tripleSubjectValue) &&
-                statementPredicateValue.endsWith(triplePredicateValue.substring(1)) &&
-                statementPredicateValue.length() >= triplePredicateValue.length() - 1);
+        if(triplePredicateValue.isEmpty()) {
+            return false;
+        }
+        else if(triplePredicateValue.length() == 1) {
+            return statementSubjectValue.isEmpty();
+        }
+        else {
+            return (statementSubjectValue.endsWith(tripleSubjectValue) &&
+                    statementPredicateValue.endsWith(triplePredicateValue.substring(1)) &&
+                    statementPredicateValue.length() >= triplePredicateValue.length() - 1);
+        }
     }
 
 }

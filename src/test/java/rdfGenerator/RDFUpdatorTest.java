@@ -1,9 +1,9 @@
 package rdfGenerator;
 
 import org.apache.jena.rdf.model.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import triple.Triple;
 
 import java.util.ArrayList;
@@ -12,27 +12,27 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class RDFUpdatorTest {
+class RDFUpdatorTest {
     private static Model originalModel;
     private Model modifiedModel;
 
 
-    @BeforeClass
-    public static void setupOriginalModel() {
+    @BeforeAll
+    static void setupOriginalModel() {
         System.out.println("Setup Original Model");
         originalModel = ModelFactory.createDefaultModel();
         originalModel.read("sample-rdf/AddressesShort.ttl");
     }
 
 
-    @Before
-    public void resetModifiedModel() {
+    @BeforeEach
+    void resetModifiedModel() {
         modifiedModel = ModelFactory.createDefaultModel().add(originalModel);
     }
 
 
     @Test
-    public void testRdfUpdatorSingleTupleSuccess() {
+    void testRdfUpdatorSingleTupleSuccess() {
         Triple triple = new Triple("230056", "council_person", "Some Name");
         int affectedStatementCount = RDFUpdator.update(modifiedModel, triple);
 
@@ -62,7 +62,7 @@ public class RDFUpdatorTest {
 
 
     @Test
-    public void testRdfUpdatorInvalidUpdateEmpty() {
+    void testRdfUpdatorInvalidUpdateEmpty() {
         // test empty subject
         Triple triple = new Triple("", "city", "Some City");
         int affectedStatementsCount = RDFUpdator.update(modifiedModel, triple);
@@ -99,7 +99,7 @@ public class RDFUpdatorTest {
 
 
     @Test
-    public void testRdfUpdatorMultipleTuplesSuccess() {
+    void testRdfUpdatorMultipleTuplesSuccess() {
         Triple triple1 = new Triple("230129", "district_num", "-1");
         Triple triple2 = new Triple("230112", "city", "UNKNOWN");
         List<Triple> triples = new ArrayList<Triple>();

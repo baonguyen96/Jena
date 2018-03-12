@@ -43,9 +43,9 @@ class DateTimeMutationTest {
         Calendar cal = Calendar.getInstance();
         Date invalidDate = new Date(DateTimeMutation.createAlwaysInvalidDates());
         cal.setLenient(false);
-        cal.setTime(invalidDate);
 
         expectedException.expect(Exception.class);
+        cal.setTime(invalidDate);
         cal.getTime();
     }
 

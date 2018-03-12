@@ -1,30 +1,41 @@
 package driver;
 
+import constraints.StringMutation;
 import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import rdfGenerator.RDFGenerator;
-import rdfGenerator.RDFUpdator;
 import triple.Triple;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 
-@SuppressWarnings("Duplicates")
 public class Main {
 
     public static void main(String[] args) {
-        Main.executeQuery();
-//        Main.generateRDF();
+        ResultSet defaultResultSet = executeQuery();
+        ResultSet modifiedResultSet = executeQuery();
+        List<Triple> triples = createListOfTriples(defaultResultSet, "council_person", "full_address", "city", "zip");
+//        printTriples(triples);
+        Model model = RDFGenerator.createDefaultModel();
+        model = RDFGenerator.addMultipleTriplesToModel(model, triples);
+        saveRDFGraphToFile(model, "GeneratedRDFModel2.ttl");
     }
 
 
-    public static void executeQuery() {
+    private static void printTriples(List<Triple> triples) {
+        for(Triple triple : triples) {
+            System.out.println(triple.toString());
+        }
+    }
+
+
+    public static ResultSet executeQuery() {
         String queryIntegrity =
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -44,13 +55,12 @@ public class Main {
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
                 "\n" +
                 "\n" +
-                "select distinct ?council_person ?full_address ?city ?zip ?something\n" +
+                "select distinct ?council_person ?full_address ?city ?zip\n" +
                 "where {\n" +
                 "  {\n" +
                 "    ?person ds:council_person ?council_person.\n" +
                 "    ?person ds:full_address ?full_address.\n" +
                 "    ?person ds:city ?city.\n" +
-                "    ?person ds:something ?something.\n" +
                 "    ?person ds:zip ?zip\n" +
                 "  }  \n" +
                 "}\n" +
@@ -59,103 +69,48 @@ public class Main {
         model.read("sample-rdf/AddressesShortNoSubject.ttl");
         Query query = QueryFactory.create(queryIntegrity);
         QueryExecution qExe = QueryExecutionFactory.create(query, model);
-        ResultSet results = qExe.execSelect();
-        ResultSetFormatter.out(System.out, results, query) ;
-
-//        while(results.hasNext()) {
-//            QuerySolution solution = results.next();
-//            RDFNode councilPerson = solution.get("council_person");
-//            RDFNode fullAddress = solution.get("full_address");
-//            System.out.println(councilPerson.toString() + " " + fullAddress.toString());
-//        }
+        return qExe.execSelect();
     }
 
 
-
-    /**
-     * method: readRDF
-     *
-     * test reading the RDF file
-     * read each line and print out each triple
-     */
-    public static void readRDF() {
+    public static int countNumberOfTriplesInModel() {
+        String queryIntegrity =
+                "SELECT (COUNT(?s) AS ?triples) WHERE {\n" +
+                        "    ?s ?p ?o\n" +
+                        "}";
         Model model = ModelFactory.createDefaultModel();
-        model.read("sample-rdf/AddressesShort.ttl");
+        model.read("sample-rdf/Empty.ttl");
+        Query query = QueryFactory.create(queryIntegrity);
+        QueryExecution qExe = QueryExecutionFactory.create(query, model);
+        ResultSet resultSet = qExe.execSelect();
+        ResultSetFormatter.out(System.out, resultSet, query) ;
+        return 0;
+    }
 
-        StmtIterator stmtIterator = model.listStatements();
-        Statement statement;
-        Property predicate;
-        Resource subject;
-        RDFNode object;
-        int statementCount = 0;
 
-        // read all triple from the ttl file
-        while(stmtIterator.hasNext()) {
-            statement = stmtIterator.next();
+    public static List<Triple> createListOfTriples(ResultSet resultSet, String... predicateNames) {
+        List<Triple> triples = new LinkedList<>();
+        QuerySolution solution = null;
+        String subjectName = "", predicateName = "", objectValue = "";
+        int totalSubjectCount = 0;
 
-            subject = statement.getSubject();
-            predicate = statement.getPredicate();
-            object = statement.getObject();
+        while(resultSet.hasNext()) {
+            solution = resultSet.next();
+            subjectName= "Subject" + totalSubjectCount++;
 
-            System.out.printf("Subject:   %s\n", subject.getURI());
-            System.out.printf("Predicate: %s\n", predicate.getLocalName());
-            System.out.printf("Object:    %s\n", object.toString());
-            System.out.println();
-            statementCount++;
+            for(String predicate : predicateNames) {
+                predicateName = predicate;
+                objectValue = solution.get(predicate).toString();
+
+                if(predicate.equalsIgnoreCase("zip")) {
+                    objectValue = StringMutation.truncate(objectValue, 3);
+                }
+
+                triples.add(new Triple(subjectName, predicateName, objectValue));
+            }
         }
 
-        System.out.println("Total statements: " + statementCount);
-    }
-
-
-    /***
-     * method: updateRDF
-     *
-     * update a given triple with match ID in the RDF graph
-     */
-    public static void updateRDF() {
-        Model model = ModelFactory.createDefaultModel();
-        model.read("sample-rdf/AddressesShort.ttl");
-
-        // update valid single triple
-        Triple triple0 = new Triple("230056", "council_person", "Some Name");
-        int totalTriplesChanged = RDFUpdator.update(model, triple0);
-        System.out.println("Total triples changed: " + totalTriplesChanged);
-
-        // update invalid single triple (wrong id)
-        triple0 = new Triple("230057", "council_person", "Some Name");
-        totalTriplesChanged = RDFUpdator.update(model, triple0);
-        System.out.println("Total triples changed: " + totalTriplesChanged);
-
-        // update valid multiple triples at once
-        Triple triple1 = new Triple("230129", "district_num", "-1");
-        Triple triple2 = new Triple("230112", "city", "UNKNOWN");
-        List<Triple> triples = new ArrayList<Triple>();
-        triples.add(triple1);
-        triples.add(triple2);
-        totalTriplesChanged = RDFUpdator.update(model, new ArrayList<>(triples));
-        System.out.println("Total triples changed: " + totalTriplesChanged);
-
-//        saveRDFGraphToFile(model);
-    }
-
-
-    public static void generateRDF() {
-        Model model = RDFGenerator.createDefaultModel();
-        Triple triple = new Triple("Address1", "zip",  "75090");
-        model = RDFGenerator.addTripleToModel(model, triple);
-        List<Triple> triples = new LinkedList<>();
-        triples.add(new Triple("Address1", "city", "Richardson"));
-        triples.add(new Triple("Address1", "state", "TX"));
-        triples.add(new Triple("Address2", "zip",  "XHSBS"));
-        triples.add(new Triple("Address2", "city", "Random"));
-        triples.add(new Triple("Address2", "state", "UNKNOWN"));
-        model = RDFGenerator.addMultipleTriplesToModel(model, triples);
-        saveRDFGraphToFile(model, "GeneratedRDF1.ttl");
-        int totalTriplesUpdated = RDFUpdator.update(model, new Triple("Address1", "zip", "12345"));
-        System.out.println(totalTriplesUpdated);
-        saveRDFGraphToFile(model, "GeneratedRDF1Modified.ttl");
-
+        return triples;
     }
 
 
@@ -165,6 +120,7 @@ public class Main {
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
 
             if(!outputFile.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 outputFile.createNewFile();
             }
 

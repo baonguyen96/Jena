@@ -16,8 +16,9 @@ public class NumberMutation {
     }
 
 
-    public static String mutate(Options option) {
+    public static String mutate(Options option, String... changeData) {
         String number = "";
+        int index = 0;
 
         switch (option) {
             case NegativeInteger:
@@ -56,6 +57,8 @@ public class NumberMutation {
             case Zero:
                 number = getZero();
                 break;
+            case EuropeanStyle:
+                number = convertToEuropeanStyle(changeData[index++]);
             default:
                 break;
         }
@@ -121,6 +124,7 @@ public class NumberMutation {
     public static String getZero() {
         return "0";
     }
+
 
     public static String convertToEuropeanStyle(String number) {
         double realNumber = Double.parseDouble(number);
