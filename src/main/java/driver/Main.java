@@ -20,16 +20,45 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        ResultSet defaultResultSet = executeQuery();
-//        ResultSet modifiedResultSet = executeQuery();
-        ConstraintCollection constraintCollection = createConstraintCollection();
+        // good data
+        ResultSet originalResultSet = executeQuery();
         List<Triple> triples = createListOfTriples(
-                defaultResultSet, constraintCollection,
+                originalResultSet, null,
                 "council_person", "full_address", "city", "zip"
         );
         Model model = RDFGenerator.createDefaultModel();
         model = RDFGenerator.addMultipleTriplesToModel(model, triples);
-        saveRDFGraphToFile(model, "GeneratedRDFModel3.ttl");
+        saveRDFGraphToFile(model, "GoodModel.ttl");
+
+        // bad data
+        ResultSet modifiedResultSet = executeQuery();
+        ConstraintCollection constraintCollection = createConstraintCollection();
+        List<Triple> modifiedTriples = createListOfTriples(
+                modifiedResultSet, constraintCollection,
+                "council_person", "full_address", "city", "zip"
+        );
+        Model badModel = RDFGenerator.createDefaultModel();
+        badModel = RDFGenerator.addMultipleTriplesToModel(badModel, modifiedTriples);
+        saveRDFGraphToFile(badModel, "BadModel.ttl");
+    }
+
+    
+    /*
+     * this method receives all necessary parameters from the UI
+     */
+    private static ConstraintCollection createConstraintCollection() {
+        ConstraintCollection constraintCollection = new ConstraintCollection();
+        Constraint constraint = null;
+
+        constraint = new Constraint("zip",
+                Mutation.CREATE_RANDOM_STRING, "6");
+        constraintCollection.addConstraintToCollection(constraint);
+
+        constraint = new Constraint("council_person",
+                Mutation.TRUNCATE_NUMBER_OF_CHARACTERS, "3");
+        constraintCollection.addConstraintToCollection(constraint);
+
+        return constraintCollection;
     }
 
 
@@ -40,7 +69,7 @@ public class Main {
     }
 
 
-    public static ResultSet executeQuery() {
+    private static ResultSet executeQuery() {
         String queryIntegrity =
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -121,25 +150,6 @@ public class Main {
             }
         }
         return objectValue;
-    }
-
-
-    /*
-     * this method receives all necessary parameters from the UI
-     */
-    private static ConstraintCollection createConstraintCollection() {
-        ConstraintCollection constraintCollection = new ConstraintCollection();
-        Constraint constraint = null;
-
-        constraint = new Constraint("zip",
-                Mutation.CREATE_RANDOM_STRING, "6");
-        constraintCollection.addConstraintToCollection(constraint);
-
-        constraint = new Constraint("council_person",
-                Mutation.TRUNCATE_NUMBER_OF_CHARACTERS, "3");
-        constraintCollection.addConstraintToCollection(constraint);
-
-        return constraintCollection;
     }
 
 

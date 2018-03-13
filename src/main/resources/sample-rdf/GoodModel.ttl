@@ -1,0 +1,359 @@
+<Subject1>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject50>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject22>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject63>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject35>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject48>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject70>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject42>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .
+
+<Subject6>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject14>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject55>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject27>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject68>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject0>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject21>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .
+
+<Subject62>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject34>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject47>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject19>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject41>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject5>  <city>        <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject13>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject54>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject26>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject67>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject39>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject20>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject61>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject33>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject46>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject18>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .
+
+<Subject59>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject40>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject4>  <city>        <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject12>  <city>       <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject53>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject25>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject66>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .
+
+<Subject38>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject60>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject32>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject45>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .
+
+<Subject9>  <city>        <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject17>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject58>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject3>  <city>        <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject11>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject52>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject24>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject65>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70815> .
+
+<Subject37>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject31>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject44>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject8>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject16>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject57>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject29>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject2>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70815> .
+
+<Subject10>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject51>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70791> .
+
+<Subject23>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject64>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70806> .
+
+<Subject36>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject49>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject30>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70791> .
+
+<Subject71>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70815> .
+
+<Subject43>  <city>       <ZACHARY> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70806> .
+
+<Subject7>  <city>        <ZACHARY> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70806> .
+
+<Subject15>  <city>       <BATON ROUGE> ;
+        <council_person>  <Matt Watson> ;
+        <full_address>    <923 CROWN WAY> ;
+        <zip>             <70791> .
+
+<Subject56>  <city>       <ZACHARY> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <11542 PAMELA DR> ;
+        <zip>             <70815> .
+
+<Subject28>  <city>       <BATON ROUGE> ;
+        <council_person>  <Donna Collins-Lewis> ;
+        <full_address>    <21570 PORT HICKEY RD> ;
+        <zip>             <70806> .
+
+<Subject69>  <city>       <BATON ROUGE> ;
+        <council_person>  <Trae Welch> ;
+        <full_address>    <7019 FLORIDA BLVD> ;
+        <zip>             <70791> .

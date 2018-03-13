@@ -20,10 +20,10 @@ class StringMutationTest {
     @Test
     void testMutationOptions() {
         originalString = "Hello";
-        mutatedString = StringMutation.mutate(Mutation.APPEND_NUMBER_OF_CHARACTERS, originalString, "2");
+        mutatedString = StringMutation.mutate(Mutation.APPEND_NUMBER_OF_CHARACTERS, "2", originalString);
         assertEquals(7, mutatedString.length());
 
-        mutatedString = StringMutation.mutate(Mutation.REPLACE_CHARACTER, originalString, "l", "j");
+        mutatedString = StringMutation.mutate(Mutation.REPLACE_CHARACTER, "l", "j", originalString);
         assertEquals("Hejjo", mutatedString);
     }
 

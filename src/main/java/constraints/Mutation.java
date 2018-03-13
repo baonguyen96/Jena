@@ -49,7 +49,7 @@ public class Mutation {
     public static final int CREATE_DATE_IN_FORMAT = mutationOptions++;
     public static final int CREATE_LEAP_DATES = mutationOptions;
     private static final int DATE_TIME_MUTATION_MARKER = mutationOptions++;
-    
+
 
     public static String mutate(int mutationOption, String... mutationData) {
         String generatedData = "";

@@ -1,7 +1,0 @@
-<Address2>  <city>  <Random> ;
-        <state>  <UNKNOWN> ;
-        <zip>    <XHSBS> .
-
-<Address1>  <city>  <Richardson> ;
-        <state>  <TX> ;
-        <zip>    <12345> .
