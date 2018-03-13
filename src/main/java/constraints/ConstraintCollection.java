@@ -17,13 +17,13 @@ public class ConstraintCollection {
     }
 
 
-    public boolean isPredicateExists(String predicate) {
+    public Constraint getConstraintForPredicate(String predicate) {
         for(Constraint constraint : this.constraints) {
             if(constraint.getPredicate().equals(predicate)) {
-                return true;
+                return constraint;
             }
         }
-        return false;
+        return null;
     }
 
 }

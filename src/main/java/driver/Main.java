@@ -21,13 +21,15 @@ public class Main {
 
     public static void main(String[] args) {
         ResultSet defaultResultSet = executeQuery();
-        ResultSet modifiedResultSet = executeQuery();
+//        ResultSet modifiedResultSet = executeQuery();
         ConstraintCollection constraintCollection = createConstraintCollection();
-        List<Triple> triples = createListOfTriples(defaultResultSet, constraintCollection,
-                "council_person", "full_address", "city", "zip");
+        List<Triple> triples = createListOfTriples(
+                defaultResultSet, constraintCollection,
+                "council_person", "full_address", "city", "zip"
+        );
         Model model = RDFGenerator.createDefaultModel();
         model = RDFGenerator.addMultipleTriplesToModel(model, triples);
-        saveRDFGraphToFile(model, "GeneratedRDFModel2.ttl");
+        saveRDFGraphToFile(model, "GeneratedRDFModel3.ttl");
     }
 
 
@@ -76,28 +78,14 @@ public class Main {
     }
 
 
-    public static int countNumberOfTriplesInModel() {
-        String queryIntegrity =
-                "SELECT (COUNT(?s) AS ?triples) WHERE {\n" +
-                        "    ?s ?p ?o\n" +
-                        "}";
-        Model model = ModelFactory.createDefaultModel();
-        model.read("sample-rdf/Empty.ttl");
-        Query query = QueryFactory.create(queryIntegrity);
-        QueryExecution qExe = QueryExecutionFactory.create(query, model);
-        ResultSet resultSet = qExe.execSelect();
-        ResultSetFormatter.out(System.out, resultSet, query) ;
-        return 0;
-    }
-
-
-    public static List<Triple> createListOfTriples(
+    private static List<Triple> createListOfTriples(
             ResultSet resultSet,
             ConstraintCollection constraintCollection,
             String... predicateNames) {
+
         List<Triple> triples = new LinkedList<>();
         QuerySolution solution = null;
-        String subjectName = "", predicateName = "", objectValue = "";
+        String subjectName = "", objectValue = "";
         int totalSubjectCount = 0;
 
         while(resultSet.hasNext()) {
@@ -105,18 +93,9 @@ public class Main {
             subjectName= "Subject" + totalSubjectCount++;
 
             for(String predicate : predicateNames) {
-                predicateName = predicate;
                 objectValue = solution.get(predicate).toString();
-
-                // how to decide which predicate needs to be changed into what?
-                
-
-                // want the same functionality as this
-                if(predicate.equalsIgnoreCase("zip")) {
-                    objectValue = Mutation.mutate(Mutation.TRUNCATE_NUMBER_OF_CHARACTERS, objectValue, "3");
-                }
-
-                triples.add(new Triple(subjectName, predicateName, objectValue));
+                objectValue = mutateObjectIfRequiredByPredicate(predicate, objectValue, constraintCollection);
+                triples.add(new Triple(subjectName, predicate, objectValue));
             }
         }
 
@@ -124,20 +103,47 @@ public class Main {
     }
 
 
+    private static String mutateObjectIfRequiredByPredicate(
+            String predicate,
+            String objectValue,
+            ConstraintCollection constraintCollection) {
+
+        if(constraintCollection != null) {
+            Constraint constraintForCurrentPredicate =
+                    constraintCollection.getConstraintForPredicate(predicate);
+
+            if (constraintForCurrentPredicate != null) {
+                constraintForCurrentPredicate.appendMutationParameter(objectValue);
+                objectValue = Mutation.mutate(
+                        constraintForCurrentPredicate.getMutationOption(),
+                        constraintForCurrentPredicate.getMutationParameters()
+                );
+            }
+        }
+        return objectValue;
+    }
+
+
+    /*
+     * this method receives all necessary parameters from the UI
+     */
     private static ConstraintCollection createConstraintCollection() {
         ConstraintCollection constraintCollection = new ConstraintCollection();
         Constraint constraint = null;
 
-        constraint = new Constraint("zip", Mutation.CREATE_RANDOM_STRING, "6");
+        constraint = new Constraint("zip",
+                Mutation.CREATE_RANDOM_STRING, "6");
+        constraintCollection.addConstraintToCollection(constraint);
+
+        constraint = new Constraint("council_person",
+                Mutation.TRUNCATE_NUMBER_OF_CHARACTERS, "3");
         constraintCollection.addConstraintToCollection(constraint);
 
         return constraintCollection;
     }
 
 
-
-
-    public static void saveRDFGraphToFile(Model model, String fileName) {
+    private static void saveRDFGraphToFile(Model model, String fileName) {
         try {
             File outputFile = new File("src/main/resources/sample-rdf/" + fileName);
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);

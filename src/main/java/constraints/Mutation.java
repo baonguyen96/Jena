@@ -1,3 +1,10 @@
+/*
+ * assume at one time user can only apply 1 mutation rule to a particular predicate
+ * i.e.
+ *      allow:      zip -> 6 characters, age -> negative float with comma
+ *      not allow:  zip -> {6 characters, change characters}, age -> {zero, overflow}
+ */
+
 package constraints;
 
 public class Mutation {
@@ -42,7 +49,7 @@ public class Mutation {
     public static final int CREATE_DATE_IN_FORMAT = mutationOptions++;
     public static final int CREATE_LEAP_DATES = mutationOptions;
     private static final int DATE_TIME_MUTATION_MARKER = mutationOptions++;
-
+    
 
     public static String mutate(int mutationOption, String... mutationData) {
         String generatedData = "";

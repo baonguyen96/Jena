@@ -1,16 +1,21 @@
 package constraints;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class Constraint {
 
     private String predicate;
     private int mutationOption;
-    private String[] mutationParameters;
+    private LinkedList<String> mutationParameters;
 
 
     public Constraint(String predicate, int mutationOption, String... mutationParameters) {
         this.predicate = predicate;
         this.mutationOption = mutationOption;
-        this.mutationParameters = mutationParameters;
+        this.mutationParameters = new LinkedList<>(Arrays.asList(mutationParameters));
     }
 
 
@@ -24,7 +29,12 @@ public class Constraint {
     }
 
 
+    public void appendMutationParameter(String newParameter) {
+        this.mutationParameters.add(newParameter);
+    }
+
+
     public String[] getMutationParameters() {
-        return mutationParameters;
+        return mutationParameters.toArray(new String[mutationParameters.size()]);
     }
 }

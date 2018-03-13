@@ -1,5 +1,7 @@
 package constraints;
 
+import annotations.Note;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,7 @@ class DateTimeMutation {
     );
 
 
-
+    @Note(message = "Some parameters appear to be out-of-order. DO NOT CHANGE THE ORDER.")
     public static String mutate(int option, String... data) {
         String mutatedDate = "";
 
@@ -38,7 +40,7 @@ class DateTimeMutation {
             mutatedDate = createTodayDate();
         }
         else if(option == Mutation.CREATE_PAST_OR_FUTURE_DATE) {
-            mutatedDate = createPastOrFutureDate(data[0], Integer.parseInt(data[1]));
+            mutatedDate = createPastOrFutureDate(data[1], Integer.parseInt(data[0]));
         }
         else if(option == Mutation.CREATE_ALWAYS_INVALID_DATES) {
             mutatedDate = createAlwaysInvalidDates();

@@ -1,18 +1,22 @@
 package constraints;
 
+import annotations.Note;
+
+
 class StringMutation {
 
+    @Note(message = "Some parameters appear to be out-of-order. DO NOT CHANGE THE ORDER.")
     public static String mutate(int option, String... data) {
         String mutatedString = "";
 
         if (option == Mutation.REPLACE_CHARACTER) {
-            mutatedString = replaceCharacter(data[0], data[1], data[2]);
+            mutatedString = replaceCharacter(data[2], data[0], data[1]);
         }
         else if (option == Mutation.APPEND_NUMBER_OF_CHARACTERS) {
-            mutatedString = appendNumberOfCharacters(data[0], Integer.parseInt(data[1]));
+            mutatedString = appendNumberOfCharacters(data[1], Integer.parseInt(data[0]));
         }
         else if (option == Mutation.TRUNCATE_NUMBER_OF_CHARACTERS) {
-            mutatedString = truncateNumberOfCharacters(data[0], Integer.parseInt(data[1]));
+            mutatedString = truncateNumberOfCharacters(data[1], Integer.parseInt(data[0]));
         }
         else if (option == Mutation.EMPTIFY) {
             mutatedString = emptify();
