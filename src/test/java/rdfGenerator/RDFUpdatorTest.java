@@ -4,6 +4,7 @@ import org.apache.jena.rdf.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import rdf.RDFUpdator;
 import triple.Triple;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Constraints.iml" filepath="$PROJECT_DIR$/Constraints.iml" />
       <module fileurl="file://$PROJECT_DIR$/JenaFuseki.iml" filepath="$PROJECT_DIR$/JenaFuseki.iml" />
     </modules>
   </component>

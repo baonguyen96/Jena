@@ -8,7 +8,8 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
-import rdfGenerator.RDFGenerator;
+import rdf.QueryPreparer;
+import rdf.RDFGenerator;
 import triple.Triple;
 
 import java.io.File;
@@ -28,21 +29,22 @@ public class Main {
         );
         Model model = RDFGenerator.createDefaultModel();
         model = RDFGenerator.addMultipleTriplesToModel(model, triples);
-        saveRDFGraphToFile(model, "GoodModel.ttl");
+        saveRDFGraphToFile(model, "GoodModelFromFuseki.ttl");
 
         // bad data
-        ResultSet modifiedResultSet = executeQuery();
-        ConstraintCollection constraintCollection = createConstraintCollection();
-        List<Triple> modifiedTriples = createListOfTriples(
-                modifiedResultSet, constraintCollection,
-                "council_person", "full_address", "city", "zip"
-        );
-        Model badModel = RDFGenerator.createDefaultModel();
-        badModel = RDFGenerator.addMultipleTriplesToModel(badModel, modifiedTriples);
-        saveRDFGraphToFile(badModel, "BadModel.ttl");
+//        ResultSet modifiedResultSet = executeQuery();
+//        ConstraintCollection constraintCollection = createConstraintCollection();
+//        List<Triple> modifiedTriples = createListOfTriples(
+//                modifiedResultSet, constraintCollection,
+//                "council_person", "full_address", "city", "zip"
+//        );
+//        Model badModel = RDFGenerator.createDefaultModel();
+//        badModel = RDFGenerator.addMultipleTriplesToModel(badModel, modifiedTriples);
+//        saveRDFGraphToFile(badModel, "BadModel.ttl");
+
     }
 
-    
+
     /*
      * this method receives all necessary parameters from the UI
      */
@@ -70,40 +72,27 @@ public class Main {
 
 
     private static ResultSet executeQuery() {
-        String queryIntegrity =
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n" +
-                "PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
-                "PREFIX ds: <https://data.brla.gov/resource/_6fyg-p3r9/>\n" +
-                "PREFIX dsbase: <https://data.brla.gov/resource/>\n" +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n" +
-                "PREFIX geo1: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
-                "PREFIX ods: <http://open-data-standards.github.com/2012/01/open-data-standards#>\n" +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-                "PREFIX socrata: <http://www.socrata.com/rdf/terms#>\n" +
-                "PREFIX xml: <http://www.w3.org/XML/1998/namespace>\n" +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                "\n" +
-                "\n" +
-                "select distinct ?council_person ?full_address ?city ?zip\n" +
-                "where {\n" +
-                "  {\n" +
-                "    ?person ds:council_person ?council_person.\n" +
-                "    ?person ds:full_address ?full_address.\n" +
-                "    ?person ds:city ?city.\n" +
-                "    ?person ds:zip ?zip\n" +
-                "  }  \n" +
-                "}\n" +
-                "limit 80\n";
-        Model model = ModelFactory.createDefaultModel();
-        model.read("sample-rdf/AddressesShortNoSubject.ttl");
-        Query query = QueryFactory.create(queryIntegrity);
-        QueryExecution qExe = QueryExecutionFactory.create(query, model);
-        return qExe.execSelect();
+        String queryString = QueryPreparer.createSelectQuery(
+                "80", "council_person", "full_address", "city", "zip");
+
+        System.out.println(queryString);
+
+
+//        Model model = ModelFactory.createDefaultModel();
+//        model.read("sample-rdf/AddressesShortNoSubject.ttl");
+//        Query query = QueryFactory.create(queryString);
+//        QueryExecution qExe = QueryExecutionFactory.create(query, model);
+
+        QueryExecution qExe = QueryExecutionFactory.sparqlService(
+                "http://localhost:3030/dataset.html?tab=upload&ds=/query/sparql?force=true",
+                queryString
+        );
+
+        ResultSet resultSet = qExe.execSelect();
+
+        ResultSetFormatter.out(System.out, resultSet);
+
+        return resultSet;
     }
 
 

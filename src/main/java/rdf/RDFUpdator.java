@@ -1,4 +1,4 @@
-package rdfGenerator;
+package rdf;
 
 import org.apache.jena.rdf.model.*;
 import triple.Triple;

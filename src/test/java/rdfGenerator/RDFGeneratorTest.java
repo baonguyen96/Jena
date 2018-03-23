@@ -4,6 +4,7 @@ import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import rdf.RDFGenerator;
 import triple.Triple;
 
 import java.util.LinkedList;
